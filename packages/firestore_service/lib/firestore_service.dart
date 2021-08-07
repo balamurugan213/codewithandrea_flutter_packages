@@ -22,7 +22,7 @@ class FirestoreService {
     await reference.delete();
   }
 
-  bool collectionCheck<T>({
+  Future<int> collectionCheck<T>({
     required String path,
     required T Function(Map<String, dynamic>? data, String documentID) builder,
     Query<Map<String, dynamic>>? Function(Query<Map<String, dynamic>> query)?
@@ -47,13 +47,14 @@ class FirestoreService {
       return result;
     });
     print('++++++++++++');
-    final user = res.length as int;
-    print(user);
-    if (user > 0) {
-      return true;
-    } else {
-      return false;
-    }
+    return res.length;
+    // final user = res.length as int;
+    // print(user);
+    // if (user > 0) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
   }
 
   Stream<List<T>> collectionStream<T>({

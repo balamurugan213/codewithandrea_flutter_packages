@@ -22,6 +22,24 @@ class FirestoreService {
     await reference.delete();
   }
 
+  Future<bool> checkData({
+    required String path,
+    Query<Map<String, dynamic>>? Function(Query<Map<String, dynamic>> query)?
+        queryBuilder,
+  }) async {
+    Query<Map<String, dynamic>> query =
+        FirebaseFirestore.instance.collection(path);
+    if (queryBuilder != null) {
+      query = queryBuilder(query)!;
+    }
+    final DocumentSnapshot snapshot = query.get();
+    if (snapshot.exists) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Stream<List<T>> collectionStream<T>({
     required String path,
     required T Function(Map<String, dynamic>? data, String documentID) builder,

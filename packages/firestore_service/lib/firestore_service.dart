@@ -32,8 +32,8 @@ class FirestoreService {
     if (queryBuilder != null) {
       query = queryBuilder(query)!;
     }
-    final DocumentSnapshot snapshot = query.get();
-    if (snapshot.exists) {
+    final List<DocumentSnapshot> snapshot = query.get();
+    if (snapshot.isNotEmpty) {
       return true;
     } else {
       return false;

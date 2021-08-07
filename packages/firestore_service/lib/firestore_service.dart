@@ -47,11 +47,12 @@ class FirestoreService {
       return result;
     });
     print('++++++++++++');
-    print(res.length);
-    if (res.isEmpty as bool) {
-      return false;
-    } else {
+    final user = res.length as int;
+    print(user);
+    if (user > 0) {
       return true;
+    } else {
+      return false;
     }
   }
 

@@ -22,7 +22,7 @@ class FirestoreService {
     await reference.delete();
   }
 
-  bool collectionStreamcheck<T>({
+  bool collectionCheck<T>({
     required String path,
     required T Function(Map<String, dynamic>? data, String documentID) builder,
     Query<Map<String, dynamic>>? Function(Query<Map<String, dynamic>> query)?

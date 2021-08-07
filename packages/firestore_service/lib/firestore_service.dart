@@ -46,6 +46,7 @@ class FirestoreService {
       }
       return result;
     });
+    print('package print working');
     print('++++++++++++');
     final int x = await res.length;
     print(x);

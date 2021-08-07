@@ -22,21 +22,34 @@ class FirestoreService {
     await reference.delete();
   }
 
-  Future<bool> checkData({
+  bool collectionStreamcheck<T>({
     required String path,
+    required T Function(Map<String, dynamic>? data, String documentID) builder,
     Query<Map<String, dynamic>>? Function(Query<Map<String, dynamic>> query)?
         queryBuilder,
-  }) async {
+    int Function(T lhs, T rhs)? sort,
+  }) {
     Query<Map<String, dynamic>> query =
         FirebaseFirestore.instance.collection(path);
     if (queryBuilder != null) {
       query = queryBuilder(query)!;
     }
-    final List<DocumentSnapshot> snapshot = query.get();
-    if (snapshot.isNotEmpty) {
-      return true;
-    } else {
+    final Stream<QuerySnapshot<Map<String, dynamic>>> snapshots =
+        query.snapshots();
+    final res = snapshots.map((snapshot) {
+      final result = snapshot.docs
+          .map((snapshot) => builder(snapshot.data(), snapshot.id))
+          .where((value) => value != null)
+          .toList();
+      if (sort != null) {
+        result.sort(sort);
+      }
+      return result;
+    });
+    if (res.isEmpty as bool) {
       return false;
+    } else {
+      return true;
     }
   }
 

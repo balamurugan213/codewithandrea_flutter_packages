@@ -48,6 +48,7 @@ class FirestoreService {
     });
     print('++++++++++++');
     final int x = await res.length;
+    print(x);
     return x;
     // final user = res.length as int;
     // print(user);

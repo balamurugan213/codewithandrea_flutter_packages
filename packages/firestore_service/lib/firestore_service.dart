@@ -46,6 +46,8 @@ class FirestoreService {
       }
       return result;
     });
+    print('++++++++++++');
+    print(res.length);
     if (res.isEmpty as bool) {
       return false;
     } else {

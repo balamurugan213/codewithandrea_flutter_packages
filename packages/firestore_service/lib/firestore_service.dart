@@ -28,7 +28,7 @@ class FirestoreService {
     Query<Map<String, dynamic>>? Function(Query<Map<String, dynamic>> query)?
         queryBuilder,
     int Function(T lhs, T rhs)? sort,
-  }) {
+  }) async {
     Query<Map<String, dynamic>> query =
         FirebaseFirestore.instance.collection(path);
     if (queryBuilder != null) {
@@ -47,7 +47,8 @@ class FirestoreService {
       return result;
     });
     print('++++++++++++');
-    return res.length;
+    final int x = await res.length;
+    return x;
     // final user = res.length as int;
     // print(user);
     // if (user > 0) {
